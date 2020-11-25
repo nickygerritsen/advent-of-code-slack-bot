@@ -15,8 +15,9 @@ class AocCommand extends Command
     protected int    $aocLeaderboardId;
     protected string $dataFile;
     protected string $slackWebhook;
+    protected string $botName;
 
-    public function __construct(int $aocYear, string $aocSessionId, int $aocLeaderboardId, string $dataFile, string $slackWebhook)
+    public function __construct(int $aocYear, string $aocSessionId, int $aocLeaderboardId, string $dataFile, string $slackWebhook, string $botName)
     {
         parent::__construct(null);
         $this->aocYear          = $aocYear;
@@ -24,6 +25,7 @@ class AocCommand extends Command
         $this->aocLeaderboardId = $aocLeaderboardId;
         $this->dataFile         = $dataFile;
         $this->slackWebhook     = $slackWebhook;
+        $this->botName          = $botName;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -84,7 +86,7 @@ class AocCommand extends Command
         $client  = HttpClient::create();
         $payload = [
             'icon_emoji' => ':christmas_tree:',
-            'username'   => 'Let\'s Talk AoC bot',
+            'username'   => $this->botName,
             'text'       => $message,
         ];
 

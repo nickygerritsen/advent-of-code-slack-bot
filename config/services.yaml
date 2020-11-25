@@ -17,6 +17,7 @@ services:
             int $aocLeaderboardId: '%env(AOC_LEADERBORD_ID)%'
             string $dataFile: '%kernel.project_dir%/var/data.json'
             string $slackWebhook: '%env(SLACK_WEBHOOK)%'
+            string $botName: '%env(BOT_NAME)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
