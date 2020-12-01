@@ -71,7 +71,7 @@ class AocCommand extends Command
             }
 
             $message .= PHP_EOL;
-            $message .= sprintf('<https://adventofcode.com/%d/leaderboard/private/view/%d|View Onlne Leaderboard>', $this->aocYear, $this->aocLeaderboardId);
+            $message .= sprintf('<https://adventofcode.com/%d/leaderboard/private/view/%d|View Online Leaderboard>', $this->aocYear, $this->aocLeaderboardId);
 
             $this->postMessage($message);
         }
