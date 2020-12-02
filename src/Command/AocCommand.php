@@ -41,6 +41,22 @@ class AocCommand extends Command
 
         $results = $client->request('GET', $uri);
         $data    = $results->toArray();
+        $members = $data['members'];
+        uasort($members, function ($a, $b) {
+            if ($a['local_score'] != $b['local_score']) {
+                return $b['local_score'] <=> $a['local_score'];
+            }
+
+            if ($a['stars'] != $b['stars']) {
+                return $b['stars'] <=> $a['stars'];
+            }
+
+            if ($a['last_star_ts'] != $b['last_star_ts']) {
+                return $a['last_star_ts'] <=> $b['last_star_ts'];
+            }
+
+            return $a['name'] <=> $b['name'];
+        });
 
         if (file_exists($this->dataFile)) {
             $currentData = json_decode(file_get_contents($this->dataFile), true);
@@ -49,7 +65,7 @@ class AocCommand extends Command
         }
 
         $changed = false;
-        foreach ($data['members'] as $memberId => $member) {
+        foreach ($members as $memberId => $member) {
             foreach ($member['completion_day_level'] as $day => $stars) {
                 foreach ($stars as $part => $stats) {
                     if (!isset($currentData[$memberId][$day][$part])) {
@@ -65,7 +81,7 @@ class AocCommand extends Command
         if ($changed) {
             $message = 'Scores changed, new leaderboard:' . PHP_EOL . PHP_EOL;
             $rank    = 1;
-            foreach ($data['members'] as $member) {
+            foreach ($members as $member) {
                 $message .= sprintf('#%d, *%s*: %d points, %d stars', $rank, $member['name'], $member['local_score'], $member['stars']) . PHP_EOL;
                 $rank++;
             }
