@@ -66,7 +66,10 @@ class AocCommand extends Command
 
         $changed = false;
         foreach ($members as $memberId => $member) {
-            foreach ($member['completion_day_level'] as $day => $stars) {
+            $days = $member['completion_day_level'];
+            ksort($days);
+            foreach ($days as $day => $stars) {
+                ksort($stars);
                 foreach ($stars as $part => $stats) {
                     if (!isset($currentData[$memberId][$day][$part])) {
                         $dt = date('d-m-Y H:i:s', $stats['get_star_ts']);
