@@ -43,12 +43,12 @@ class AocCommand extends Command
         $data    = $results->toArray();
         $members = $data['members'];
         uasort($members, function ($a, $b) {
-            if ($a['local_score'] != $b['local_score']) {
-                return $b['local_score'] <=> $a['local_score'];
-            }
-
             if ($a['stars'] != $b['stars']) {
                 return $b['stars'] <=> $a['stars'];
+            }
+
+            if ($a['local_score'] != $b['local_score']) {
+                return $b['local_score'] <=> $a['local_score'];
             }
 
             if ($a['last_star_ts'] != $b['last_star_ts']) {
@@ -82,10 +82,10 @@ class AocCommand extends Command
         }
 
         if ($changed) {
-            $message = 'Scores changed, new leaderboard:' . PHP_EOL . PHP_EOL;
+            $message = 'Scores changed, new leaderboard (ordered by stars, then score):' . PHP_EOL . PHP_EOL;
             $rank    = 1;
             foreach ($members as $member) {
-                $message .= sprintf('#%d, *%s*: %d points, %d stars', $rank, $member['name'], $member['local_score'], $member['stars']) . PHP_EOL;
+                $message .= sprintf('#%d, *%s*: %d stars, %d points', $rank, $member['name'], $member['stars'], $member['local_score']) . PHP_EOL;
                 $rank++;
             }
 
