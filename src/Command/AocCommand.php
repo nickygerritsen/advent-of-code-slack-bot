@@ -34,6 +34,7 @@ class AocCommand extends Command
             'base_uri' => 'https://adventofcode.com',
             'headers'  => [
                 'Cookie' => sprintf('session=%s', $this->aocSessionId),
+                'User-Agent' => 'github.com/nickygerritsen/advent-of-code-slack-bot by @nickygerritsen',
             ],
         ]);
 
